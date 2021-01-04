@@ -13,7 +13,46 @@ class Grid:
                     [6, 7, 8, 9, 1, 2, 3, 4, 5],
                     [9, 1, 2, 3, 4, 5, 6, 7, 8]]
 
-    def __init__(self, n):
+    def __init__(self, arr=None, n=None, flag_random=False):
+        self.locked_cells = []
+        if flag_random:
+            self.fill_randomly(n)
+        else:
+            self.grid = arr
+
+        for i in range(9):
+            l = []
+            for j in range(9):
+                l.append(0 if self.grid[i][j] == 0 else 1)
+            self.locked_cells.append(l)
+
+    def nextEmpty(self):
+        for i in range(9):
+            for j in range(9):
+                if self.grid[i][j] == 0:
+                    return i, j
+        return None
+
+    def isCorrect(self, x, y, num):
+        for i in range(9):
+            if self.grid[i][y] == num:
+                return False
+            if self.grid[x][i] == num:
+                return False
+
+        area_x = x // 3
+        area_y = y // 3
+
+        for dx in range(3):
+            for dy in range(3):
+                if self.grid[area_x * 3 + dx][area_y * 3 + dy] == num:
+                    return False
+
+        return True
+
+
+
+    def fill_randomly(self, n):
         order = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         random.shuffle(order)
         self.grid = []
@@ -22,10 +61,8 @@ class Grid:
             for j in range(9):
                 l.append(order[Grid.default_grid[i][j] - 1])
             self.grid.append(l)
-
         for i in range(12):
             Grid.swap_rand_rows(self)
-
         for i in range(81 - n):
             x = random.randint(0, 8)
             y = random.randint(0, 8)
@@ -33,13 +70,6 @@ class Grid:
                 x = random.randint(0, 8)
                 y = random.randint(0, 8)
             self.grid[x][y] = 0
-
-        self.locked_cells = []
-        for i in range(9):
-            l = []
-            for j in range(9):
-                l.append(0 if self.grid[i][j] == 0 else 1)
-            self.locked_cells.append(l)
 
     def isChangable(self, x, y):
         return self.locked_cells[x][y] == 0
@@ -60,12 +90,14 @@ class Grid:
 
         if t == 1:
             Grid.transpose(self)
+    
+    def __str__(self):
+        return '\n'.join(' '.join(str(j) for j in i)for i in self.grid)
 
 
 class Game:
-    def __init__(self, n=None, saved_game=None):
-        if n is not None:
-            self.grid = Grid(n)
+    def __init__(self, n):
+        self.grid = Grid(n=n, flag_random=True)
 
     def showGrid(self):
         for i in range(9):
@@ -106,7 +138,8 @@ class Game:
         return True
 
     def makeMove(self):
-        print("\033[30m{}".format('Сделайте ход в формате \'[строка] [столбец] [число]\', либо завершите игру, написав \'выйти\''))
+        print("\033[30m{}".format(
+            'Сделайте ход в формате \'[строка] [столбец] [число]\', либо завершите игру, написав \'выйти\''))
         resp = input('Ваш ход: ').split()
         if resp[0].lower() == 'выйти':
             s_resp = input('Хотите сохранить прогресс? Да/Нет: ')
