@@ -101,10 +101,15 @@ class Game:
 
     def showGrid(self):
         for i in range(9):
+            if i != 0 and i % 3 == 0:
+                print('- - - - - - - - - - -')
             for j in range(9):
+                if j != 0 and j % 3 == 0:
+                    print('|', end = ' ')
                 print("\033[31m{}".format(str(self.grid.grid[i][j])) if self.grid.isChangable(i,
                                                                                               j) else "\033[30m{}".format(
                     str(self.grid.grid[i][j])), end=' ')
+                print("\033[30m{}".format(''), end='')
             print()
 
     def isCompleted(self):
