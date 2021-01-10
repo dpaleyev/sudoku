@@ -27,6 +27,10 @@ def user_game():
         os.system('cls||clear')
 
     print('Вы победили!!!')
+    print('''¨/\_/\ ♥
+> ^,^ <
+¨¨/ \\
+’¨(__)__''')
     s = input('Хотите сыграть ещё? Да/Нет: ')
     if s.strip().lower() != 'да':
         exit()
