@@ -64,5 +64,3 @@ if __name__ == '__main__':
             user_game()
         elif sel_type == '2':
             comp_game()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
