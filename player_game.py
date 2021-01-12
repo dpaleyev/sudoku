@@ -107,9 +107,9 @@ class Game:
                 if j != 0 and j % 3 == 0:
                     print('|', end = ' ')
                 print("\033[31m{}".format(str(self.grid.grid[i][j])) if self.grid.isChangable(i,
-                                                                                              j) else "\033[30m{}".format(
+                                                                                              j) else "\033[0m{}".format(
                     str(self.grid.grid[i][j])), end=' ')
-                print("\033[30m{}".format(''), end='')
+                print("\033[0m{}".format(''), end='')
             print()
 
     def isCompleted(self):
@@ -143,7 +143,7 @@ class Game:
         return True
 
     def makeMove(self):
-        print("\033[30m{}".format(
+        print("\033[0m{}".format(
             'Сделайте ход в формате \'[строка] [столбец] [число]\', либо завершите игру, написав \'выйти\''))
         resp = input('Ваш ход: ').split()
         if resp[0].lower() == 'выйти':

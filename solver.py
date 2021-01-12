@@ -33,11 +33,11 @@ def printSolution(grid):
                             print('|', end = ' ')
                         if x <= i or (x == i and y <= i):
                             print("\033[31m{}".format(str(grid.grid[x][y])) if grid.isChangable(x,
-                                                                                                y) else "\033[30m{}".format(
+                                                                                                y) else "\033[0m{}".format(
                                 str(grid.grid[x][y])), end=' ')
                         else:
-                            print("\033[31m{}".format('0') if grid.isChangable(x, y) else "\033[30m{}".format(
+                            print("\033[31m{}".format('0') if grid.isChangable(x, y) else "\033[0m{}".format(
                                 str(grid.grid[x][y])), end=' ')
-                        print("\033[30m{}".format(''), end='')
+                        print("\033[0m{}".format(''), end='')
                     print()
                 print()
